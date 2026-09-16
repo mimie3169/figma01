@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StayVibes - ระบบจองที่พักและโรงแรม</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Kanit) -->
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Kanit', sans-serif; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 flex flex-col min-h-screen">
+
+    <!-- NAVIGATION BAR -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="showPage('homepage')">
+                <i class="fa-solid me-2 fa-hotel text-2xl text-blue-600"></i>
+                <span class="text-2xl font-bold text-blue-600 tracking-tight">StayVibes</span>
+            </div>
+            <nav class="hidden md:flex space-x-6 text-sm font-medium text-slate-600">
+                <button onclick="showPage('homepage')" class="hover:text-blue-600 transition">หน้าหลัก</button>
+                <button onclick="showPage('search')" class="hover:text-blue-600 transition">ค้นหาที่พัก</button>
+                <button onclick="showPage('support')" class="hover:text-blue-600 transition">ศูนย์ช่วยเหลือ</button>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <button onclick="showPage('account')" class="flex items-center space-x-2 bg-slate-100 hover:bg-slate-200 px-4 py-2 rounded-full text-sm font-medium transition">
+                    <i class="fa-regular fa-user text-blue-600"></i>
+                    <span>บัญชีผู้ใช้</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="flex-grow">
+
+        <!-- ========================================== -->
+        <!-- 1. HOMEPAGE -->
+        <!-- ========================================== -->
+        <section id="homepage" class="page-section active">
+            <!-- Hero & Search Section -->
+            <div class="relative bg-blue-600 py-20 px-4 bg-cover bg-center" style="background-image: linear-gradient(rgba(30, 58, 138, 0.7), rgba(30, 58, 138, 0.7)), url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1600&q=80');">
+                <div class="max-w-4xl mx-auto text-center text-white mb-8">
+                    <h1 class="text-4xl md:text-5xl font-bold mb-4">ค้นหาที่พักและโรงแรมสุดโปรดของคุณ</h1>
+                    <p class="text-lg opacity-90">ราคาสุดคุ้ม พร้อมข้อเสนอพิเศษที่คุณไม่ควรพลาด</p>
+                </div>
+                
+                <!-- Search Box Component -->
+                <div class="max-w-5xl mx-auto bg-white p-4 md:p-6 rounded-2xl shadow-xl">
+                    <form onsubmit="event.preventDefault(); showPage('search');" class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div class="p-2 border rounded-xl flex items-center space-x-3">
+                            <i class="fa-solid fa-location-dot text-blue-600 text-xl"></i>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400">จุดหมายปลายทาง</label>
+                                <input type="text" placeholder="พัทยา, ภูเก็ต, เชียงใหม่" class="w-full text-sm font-semibold outline-none text-slate-700" value="ภูเก็ต">
+                            </div>
+                        </div>
+                        <div class="p-2 border rounded-xl flex items-center space-x-3">
+                            <i class="fa-solid fa-calendar-days text-blue-600 text-xl"></i>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400">เช็คอิน - เช็คเอาต์</label>
+                                <input type="text" value="20 ต.ค. - 22 ต.ค." class="w-full text-sm font-semibold outline-none text-slate-700">
+                            </div>
+                        </div>
+                        <div class="p-2 border rounded-xl flex items-center space-x-3">
+                            <i class="fa-solid fa-user-group text-blue-600 text-xl"></i>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-400">ผู้เข้าพัก / ห้อง</label>
+                                <input type="text" value="ผู้ใหญ่ 2 ท่าน, 1 ห้อง" class="w-full text-sm font-semibold outline-none text-slate-700">
+                            </div>
+                        </div>
+                        <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-xl p-3 flex items-center justify-center space-x-2 transition shadow-md">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <span>ค้นหาที่พัก</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="max-w-7xl mx-auto px-4 py-12 space-y-12">
+                <!-- Promotions & Deals -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">ข้อเสนอและโปรโมชันพิเศษ</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-r from-orange-500 to-amber-500 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg">
+                            <div>
+                                <span class="bg-white/20 text-xs px-2.5 py-1 rounded-full uppercase font-bold">ลดพิเศษ</span>
+                                <h3 class="text-xl font-bold mt-2">ส่วนลด 20% สำหรับต้อนรับลมหนาว</h3>
+                                <p class="text-sm opacity-90 mt-1">ใส่โค้ด: WINTER2024</p>
+                            </div>
+                            <button onclick="showPage('search')" class="bg-white text-orange-600 px-4 py-2 rounded-xl text-sm font-bold shadow hover:bg-slate-100">เก็บโค้ด</button>
+                        </div>
+                        <div class="bg-gradient-to-r from-blue-600 to-indigo-600 text-white p-6 rounded-2xl flex justify-between items-center shadow-lg">
+                            <div>
+                                <span class="bg-white/20 text-xs px-2.5 py-1 rounded-full uppercase font-bold">สมาชิกใหม่</span>
+                                <h3 class="text-xl font-bold mt-2">รับส่วนลดเพิ่ม 300 บาท</h3>
+                                <p class="text-sm opacity-90 mt-1">เมื่อจองขั้นต่ำ 1,500 บาท</p>
+                            </div>
+                            <button onclick="showPage('account')" class="bg-white text-blue-600 px-4 py-2 rounded-xl text-sm font-bold shadow hover:bg-slate-100">สมัครเลย</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Featured Destinations -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">เมืองเที่ยวยอดนิยม</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <div onclick="showPage('search')" class="relative rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1589394815804-964ed0be2eb5?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 text-white">
+                                <div>
+                                    <h3 class="font-bold text-lg">ภูเก็ต</h3>
+                                    <p class="text-xs text-slate-300">1,240 ที่พัก</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div onclick="showPage('search')" class="relative rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1598970434795-0c54fe7c0648?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 text-white">
+                                <div>
+                                    <h3 class="font-bold text-lg">เชียงใหม่</h3>
+                                    <p class="text-xs text-slate-300">890 ที่พัก</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div onclick="showPage('search')" class="relative rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1508009603885-50cf7c579365?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 text-white">
+                                <div>
+                                    <h3 class="font-bold text-lg">พัทยา</h3>
+                                    <p class="text-xs text-slate-300">1,500 ที่พัก</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div onclick="showPage('search')" class="relative rounded-2xl overflow-hidden shadow-md cursor-pointer group">
+                            <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover group-hover:scale-105 transition duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-4 text-white">
+                                <div>
+                                    <h3 class="font-bold text-lg">กรุงเทพฯ</h3>
+                                    <p class="text-xs text-slate-300">2,100 ที่พัก</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recommended Properties -->
+                <div>
+                    <h2 class="text-2xl font-bold mb-6">ที่พักแนะนำยอดนิยม</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <!-- Property Card 1 -->
+                        <div class="bg-white rounded-2xl border overflow-hidden hover:shadow-lg transition cursor-pointer" onclick="showPage('detail')">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                            <div class="p-4 space-y-2">
+                                <div class="flex justify-between items-center text-xs font-medium text-slate-500">
+                                    <span class="bg-blue-50 text-blue-600 px-2 py-1 rounded">รีสอร์ทหรู</span>
+                                    <span><i class="fa-solid fa-star text-amber-400"></i> 4.9 (120 รีวิว)</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-slate-800">The Grand Andaman Resort</h3>
+                                <p class="text-sm text-slate-500"><i class="fa-solid fa-location-dot"></i> หาดป่าตอง, ภูเก็ต</p>
+                                <div class="flex justify-between items-end pt-2 border-t">
+                                    <div>
+                                        <span class="text-xs text-slate-400">เริ่มต้น</span>
+                                        <div class="text-lg font-bold text-blue-600">฿3,200 <span class="text-xs font-normal text-slate-500">/คืน</span></div>
+                                    </div>
+                                    <button class="bg-blue-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-blue-700">ดูรายละเอียด</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Property Card 2 -->
+                        <div class="bg-white rounded-2xl border overflow-hidden hover:shadow-lg transition cursor-pointer" onclick="showPage('detail')">
+                            <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                            <div class="p-4 space-y-2">
+                                <div class="flex justify-between items-center text-xs font-medium text-slate-500">
+                                    <span class="bg-emerald-50 text-emerald-600 px-2 py-1 rounded">พูลวิลล่า</span>
+                                    <span><i class="fa-solid fa-star text-amber-400"></i> 4.8 (95 รีวิว)</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-slate-800">Villa Sunset Pool & Spa</h3>
+                                <p class="text-sm text-slate-500"><i class="fa-solid fa-location-dot"></i> พัทยาใต้, ชลบุรี</p>
+                                <div class="flex justify-between items-end pt-2 border-t">
+                                    <div>
+                                        <span class="text-xs text-slate-400">เริ่มต้น</span>
+                                        <div class="text-lg font-bold text-blue-600">฿5,500 <span class="text-xs font-normal text-slate-500">/คืน</span></div>
+                                    </div>
+                                    <button class="bg-blue-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-blue-700">ดูรายละเอียด</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Property Card 3 -->
+                        <div class="bg-white rounded-2xl border overflow-hidden hover:shadow-lg transition cursor-pointer" onclick="showPage('detail')">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=600&q=80" class="w-full h-48 object-cover">
+                            <div class="p-4 space-y-2">
+                                <div class="flex justify-between items-center text-xs font-medium text-slate-500">
+                                    <span class="bg-purple-50 text-purple-600 px-2 py-1 rounded">โรงแรม</span>
+                                    <span><i class="fa-solid fa-star text-amber-400"></i> 4.7 (210 รีวิว)</span>
+                                </div>
+                                <h3 class="font-bold text-lg text-slate-800">Mountain View Boutique</h3>
+                                <p class="text-sm text-slate-500"><i class="fa-solid fa-location-dot"></i> แม่ริม, เชียงใหม่</p>
+                                <div class="flex justify-between items-end pt-2 border-t">
+                                    <div>
+                                        <span class="text-xs text-slate-400">เริ่มต้น</span>
+                                        <div class="text-lg font-bold text-blue-600">฿1,800 <span class="text-xs font-normal text-slate-500">/คืน</span></div>
+                                    </div>
+                                    <button class="bg-blue-600 text-white text-xs px-3 py-2 rounded-lg font-semibold hover:bg-blue-700">ดูรายละเอียด</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 2. SEARCH & DISCOVERY -->
+        <!-- ========================================== -->
+        <section id="search" class="page-section max-w-7xl mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row gap-6">
+                <!-- Filters Sidebar -->
+                <div class="w-full md:w-1/4 bg-white p-5 rounded-2xl border h-fit space-y-6">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <h3 class="font-bold text-lg">ตัวกรองค้นหา</h3>
+                        <button class="text-xs text-blue-600 hover:underline">ล้างทั้งหมด</button>
+                    </div>
+                    <!-- Filter: Price -->
+                    <div>
+                        <label class="font-semibold text-sm block mb-2">ช่วงราคา (ต่อคืน)</label>
+                        <input type="range" min="500" max="10000" class="w-full accent-blue-600">
+                        <div class="flex justify-between text-xs text-slate-500 mt-1">
+                            <span>฿500</span>
+                            <span>฿10,000+</span>
+                        </div>
+                    </div>
+                    <!-- Filter: Property Type -->
+                    <div>
+                        <label class="font-semibold text-sm block mb-2">ประเภทที่พัก</label>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center space-x-2"><input type="checkbox" checked class="rounded accent-blue-600"> <span>โรงแรม (Hotel)</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" checked class="rounded accent-blue-600"> <span>รีสอร์ท (Resort)</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" class="rounded accent-blue-600"> <span>พูลวิลล่า (Pool Villa)</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" class="rounded accent-blue-600"> <span>อพาร์ตเมนต์ (Apartment)</span></label>
+                        </div>
+                    </div>
+                    <!-- Filter: Amenities -->
+                    <div>
+                        <label class="font-semibold text-sm block mb-2">สิ่งอำนวยความสะดวก</label>
+                        <div class="space-y-2 text-sm">
+                            <label class="flex items-center space-x-2"><input type="checkbox" class="rounded accent-blue-600"> <span>สระว่ายน้ำ</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" class="rounded accent-blue-600"> <span>Free Wi-Fi</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" class="rounded accent-blue-600"> <span>อาหารเช้าฟรี</span></label>
+                            <label class="flex items-center space-x-2"><input type="checkbox" class="rounded accent-blue-600"> <span>ที่จอดรถ</span></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Results -->
+                <div class="w-full md:w-3/4 space-y-4">
+                    <div class="flex justify-between items-center bg-white p-4 rounded-xl border">
+                        <span class="text-sm font-semibold text-slate-600">พบ 120 ที่พักใน <strong>ภูเก็ต</strong></span>
+                        <div class="flex space-x-2">
+                            <button class="px-3 py-1.5 text-xs font-semibold bg-blue-50 text-blue-600 rounded-lg border border-blue-200"><i class="fa-solid fa-list mr-1"></i> รายการ</button>
+                            <button class="px-3 py-1.5 text-xs font-semibold bg-white text-slate-600 rounded-lg border hover:bg-slate-50"><i class="fa-solid fa-map-location-dot mr-1"></i> แผนที่ (Map View)</button>
+                        </div>
+                    </div>
+
+                    <!-- Item Result -->
+                    <div class="bg-white border rounded-2xl overflow-hidden flex flex-col md:flex-row hover:shadow-md transition">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=600&q=80" class="w-full md:w-2/5 h-48 md:h-auto object-cover">
+                        <div class="p-5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-slate-800">The Grand Andaman Resort</h3>
+                                        <p class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-location-dot"></i> หาดป่าตอง, ภูเก็ต - ห่างจากหาด 200 เมตร</p>
+                                    </div>
+                                    <div class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded-lg text-sm">4.9</div>
+                                </div>
+                                <div class="flex space-x-2 mt-3 text-xs text-slate-500">
+                                    <span class="bg-slate-100 px-2 py-1 rounded"><i class="fa-solid fa-wifi text-slate-400"></i> Free WiFi</span>
+                                    <span class="bg-slate-100 px-2 py-1 rounded"><i class="fa-solid fa-person-swimming text-slate-400"></i> สระว่ายน้ำ</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end mt-4 pt-3 border-t">
+                                <span class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ยกเลิกการจองฟรี</span>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-blue-600">฿3,200</div>
+                                    <button onclick="showPage('detail')" class="mt-1 bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-xl font-semibold">ดูรายละเอียดห้องพัก</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Item Result 2 -->
+                    <div class="bg-white border rounded-2xl overflow-hidden flex flex-col md:flex-row hover:shadow-md transition">
+                        <img src="https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=600&q=80" class="w-full md:w-2/5 h-48 md:h-auto object-cover">
+                        <div class="p-5 flex-grow flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="text-xl font-bold text-slate-800">Phuket Horizon Hotel</h3>
+                                        <p class="text-xs text-slate-500 mt-1"><i class="fa-solid fa-location-dot"></i> เมืองภูเก็ต, ภูเก็ต</p>
+                                    </div>
+                                    <div class="bg-blue-600 text-white font-bold px-2.5 py-1 rounded-lg text-sm">4.5</div>
+                                </div>
+                                <div class="flex space-x-2 mt-3 text-xs text-slate-500">
+                                    <span class="bg-slate-100 px-2 py-1 rounded"><i class="fa-solid fa-utensils text-slate-400"></i> อาหารเช้า</span>
+                                </div>
+                            </div>
+                            <div class="flex justify-between items-end mt-4 pt-3 border-t">
+                                <span class="text-xs text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> ไม่ต้องใช้บัตรเครดิต</span>
+                                <div class="text-right">
+                                    <div class="text-2xl font-bold text-blue-600">฿1,950</div>
+                                    <button onclick="showPage('detail')" class="mt-1 bg-blue-600 hover:bg-blue-700 text-white text-xs px-4 py-2 rounded-xl font-semibold">ดูรายละเอียดห้องพัก</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- PROPERTY DETAIL PAGE -->
+        <!-- ========================================== -->
+        <section id="detail" class="page-section max-w-7xl mx-auto px-4 py-8">
+            <div class="space-y-6">
+                <!-- Header Detail -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                    <div>
+                        <h1 class="text-3xl font-bold">The Grand Andaman Resort</h1>
+                        <p class="text-slate-500 text-sm mt-1"><i class="fa-solid fa-location-dot text-blue-600"></i> 123/45 ถนนทวีวงศ์ หาดป่าตอง อ.กะทู้, ภูเก็ต 83150</p>
+                    </div>
+                    <button class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-4 py-2 rounded-xl text-sm font-semibold flex items-center space-x-2">
+                        <i class="fa-regular fa-heart text-red-500"></i>
+                        <span>บันทึกเป็นที่โปรด</span>
+                    </button>
+                </div>
+
+                <!-- Gallery -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-96">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover rounded-2xl md:col-span-2">
+                    <div class="grid grid-rows-2 gap-4 h-full">
+                        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover rounded-2xl">
+                        <img src="https://images.unsplash.com/photo-1540555700478-4be289fbecef?auto=format&fit=crop&w=600&q=80" class="w-full h-full object-cover rounded-2xl">
+                    </div>
+                </div>
+
+                <!-- Room Types & Selection -->
+                <div class="mt-8 space-y-4">
+                    <h2 class="text-2xl font-bold">รายการห้องพักที่ว่าง</h2>
+                    
+                    <div class="bg-white border rounded-2xl p-4 md:p-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
+                            <img src="https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=400&q=80" class="w-full md:w-48 h-32 object-cover rounded-xl">
+                            <div>
+                                <h3 class="font-bold text-lg">Deluxe Ocean View</h3>
+                                <p class="text-xs text-slate-500 mt-1">1 เตียงคิงไซส์ • เตียงนอนสำหรับ 2 ท่าน • รวมอาหารเช้า</p>
+                                <div class="flex space-x-3 mt-3 text-xs text-slate-600">
+                                    <span><i class="fa-solid fa-wifi"></i> WiFi ฟรี</span>
+                                    <span><i class="fa-solid fa-ban-smoking"></i> ห้ามสูบบุหรี่</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right w-full md:w-auto">
+                            <div class="text-2xl font-bold text-blue-600">฿3,200 <span class="text-xs text-slate-400 font-normal">/คืน</span></div>
+                            <button onclick="showPage('checkout')" class="w-full md:w-auto mt-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-xl font-semibold transition">จองห้องพักนี้</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 3. BOOKING & CHECKOUT -->
+        <!-- ========================================== -->
+        <section id="checkout" class="page-section max-w-5xl mx-auto px-4 py-8">
+            <h1 class="text-2xl font-bold mb-6">กรอกข้อมูลการจองและชำระเงิน</h1>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Form Info -->
+                <div class="md:col-span-2 space-y-6">
+                    <!-- Guest Details -->
+                    <div class="bg-white p-6 rounded-2xl border space-y-4">
+                        <h2 class="font-bold text-lg border-b pb-3">ข้อมูลผู้เข้าพัก</h2>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">ชื่อจริง</label>
+                                <input type="text" value="สมชาย" class="w-full border rounded-xl p-2.5 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 mb-1">นามสกุล</label>
+                                <input type="text" value="ใจดี" class="w-full border rounded-xl p-2.5 text-sm">
+                            </div>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">อีเมล (สำหรับรับใบยืนยัน)</label>
+                            <input type="email" value="somchai@example.com" class="w-full border rounded-xl p-2.5 text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-600 mb-1">คำขอพิเศษ (Special Requests)</label>
+                            <textarea placeholder="เช่น ขอห้องชั้นสูง, เช็คอินล่าช้า" class="w-full border rounded-xl p-2.5 text-sm h-20"></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Payment Gateway -->
+                    <div class="bg-white p-6 rounded-2xl border space-y-4">
+                        <h2 class="font-bold text-lg border-b pb-3">เลือกช่องทางการชำระเงิน</h2>
+                        <div class="space-y-3">
+                            <label class="flex items-center justify-between p-3 border rounded-xl cursor-pointer hover:bg-slate-50">
+                                <div class="flex items-center space-x-3">
+                                    <input type="radio" name="payment" checked class="accent-blue-600">
+                                    <span class="text-sm font-semibold">พร้อมเพย์ / QR Code</span>
+                                </div>
+                                <i class="fa-solid fa-qrcode text-lg text-slate-500"></i>
+                            </label>
+                            <label class="flex items-center justify-between p-3 border rounded-xl cursor-pointer hover:bg-slate-50">
+                                <div class="flex items-center space-x-3">
+                                    <input type="radio" name="payment" class="accent-blue-600">
+                                    <span class="text-sm font-semibold">บัตรเครดิต / บัตรเดบิต</span>
+                                </div>
+                                <i class="fa-regular fa-credit-card text-lg text-slate-500"></i>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button onclick="showPage('confirmation')" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3.5 rounded-xl font-bold text-lg transition shadow-lg">ยืนยันและชำระเงิน</button>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="bg-white p-6 rounded-2xl border h-fit space-y-4">
+                    <h2 class="font-bold text-lg border-b pb-3">สรุปรายการจอง</h2>
+                    <div class="flex space-x-3">
+                        <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded-xl">
+                        <div>
+                            <h3 class="font-bold text-sm">The Grand Andaman Resort</h3>
+                            <p class="text-xs text-slate-500">Deluxe Ocean View</p>
+                        </div>
+                    </div>
+                    <div class="border-t pt-3 space-y-2 text-sm">
+                        <div class="flex justify-between text-slate-600">
+                            <span>เข้าพัก:</span>
+                            <span class="font-semibold">20 ต.ค. 2024</span>
+                        </div>
+                        <div class="flex justify-between text-slate-600">
+                            <span>เช็คเอาต์:</span>
+                            <span class="font-semibold">22 ต.ค. 2024</span>
+                        </div>
+                        <div class="flex justify-between text-slate-600">
+                            <span>ระยะเวลา:</span>
+                            <span class="font-semibold">2 คืน</span>
+                        </div>
+                    </div>
+                    <div class="border-t pt-3 flex justify-between items-center text-lg font-bold">
+                        <span>ราคารวมทั้งหมด</span>
+                        <span class="text-blue-600">฿6,400</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- BOOKING CONFIRMATION PAGE -->
+        <section id="confirmation" class="page-section max-w-2xl mx-auto px-4 py-12 text-center">
+            <div class="bg-white p-8 rounded-2xl border shadow-sm space-y-6">
+                <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-3xl">
+                    <i class="fa-solid fa-check"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-800">การจองของคุณสำเร็จแล้ว!</h1>
+                    <p class="text-slate-500 text-sm mt-1">เราได้ส่งใบยืนยันการจอง (Voucher) ไปที่อีเมลของคุณเรียบร้อยแล้ว</p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-xl text-left space-y-2 text-sm border">
+                    <p><strong>หมายเลขการจอง:</strong> #SV-892014</p>
+                    <p><strong>ที่พัก:</strong> The Grand Andaman Resort (ภูเก็ต)</p>
+                    <p><strong>วันที่:</strong> 20 - 22 ตุลาคม 2024 (2 คืน)</p>
+                </div>
+                <div>
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=SV-892014" class="mx-auto rounded-lg border p-2">
+                    <p class="text-xs text-slate-400 mt-2">แสดง QR Code นี้เมื่อเช็คอินที่ที่พัก</p>
+                </div>
+                <button onclick="showPage('homepage')" class="bg-blue-600 text-white px-6 py-2.5 rounded-xl font-semibold text-sm">กลับหน้าหลัก</button>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 4. USER ACCOUNT -->
+        <!-- ========================================== -->
+        <section id="account" class="page-section max-w-6xl mx-auto px-4 py-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <!-- Sidebar Menu -->
+                <div class="bg-white p-4 rounded-2xl border space-y-1">
+                    <div class="p-3 border-b mb-2">
+                        <h3 class="font-bold">คุณสมชาย ใจดี</h3>
+                        <p class="text-xs text-slate-400">สมาชิก StayVibes Gold</p>
+                    </div>
+                    <button class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold bg-blue-50 text-blue-600"><i class="fa-solid fa-clock-rotate-left mr-2"></i> ประวัติการจอง</button>
+                    <button class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold hover:bg-slate-50 text-slate-600"><i class="fa-regular fa-heart mr-2"></i> ที่พักที่บันทึกไว้</button>
+                    <button class="w-full text-left px-3 py-2 rounded-xl text-sm font-semibold hover:bg-slate-50 text-slate-600"><i class="fa-regular fa-user mr-2"></i> ตั้งค่าบัญชี</button>
+                </div>
+
+                <!-- Account Content -->
+                <div class="md:col-span-3 space-y-4">
+                    <h2 class="text-xl font-bold">ประวัติการจองของฉัน</h2>
+                    
+                    <div class="bg-white border rounded-2xl p-5 space-y-3">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full font-bold">กำลังจะมาถึง</span>
+                            <span class="text-slate-400">หมายเลข: #SV-892014</span>
+                        </div>
+                        <div class="flex space-x-4">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=200&q=80" class="w-20 h-20 object-cover rounded-xl">
+                            <div>
+                                <h3 class="font-bold">The Grand Andaman Resort</h3>
+                                <p class="text-xs text-slate-500 mt-1">20 ต.ค. 2024 - 22 ต.ค. 2024</p>
+                                <p class="text-sm font-bold text-blue-600 mt-1">฿6,400</p>
+                            </div>
+                        </div>
+                        <div class="flex justify-end space-x-2 border-t pt-3">
+                            <button class="border px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-slate-50">ดูใบจอง (Voucher)</button>
+                            <button class="border border-red-200 text-red-600 px-3 py-1.5 rounded-lg text-xs font-semibold hover:bg-red-50">ยกเลิกการจอง</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================== -->
+        <!-- 5. SUPPORT & HELP CENTER -->
+        <!-- ========================================== -->
+        <section id="support" class="page-section max-w-4xl mx-auto px-4 py-8">
+            <h1 class="text-3xl font-bold text-center mb-8">ศูนย์ช่วยเหลือและคำถามที่พบบ่อย</h1>
+            
+            <div class="space-y-4">
+                <div class="bg-white p-4 rounded-xl border">
+                    <h3 class="font-bold text-lg mb-2">ขั้นตอนการยกเลิกการจองและขอคืนเงินทำอย่างไร?</h3>
+                    <p class="text-slate-600 text-sm">คุณสามารถยกเลิกการจองได้โดยไปที่หน้า "บัญชีผู้ใช้" > "ประวัติการจอง" และกดเลือก "ยกเลิกการจอง" ทั้งนี้ขึ้นอยู่กับนโยบายของที่พักแต่ละแห่ง</p>
+                </div>
+                <div class="bg-white p-4 rounded-xl border">
+                    <h3 class="font-bold text-lg mb-2">ฉันจะได้รับใบยืนยันการจองเมื่อใด?</h3>
+                    <p class="text-slate-600 text-sm">ระบบจะส่งใบยืนยันการจองพร้อม QR Code ไปยังอีเมลที่คุณลงทะเบียนไว้ทันทีหลังจากชำระเงินสำเร็จ</p>
+                </div>
+            </div>
+
+            <!-- Contact Us -->
+            <div class="mt-12 bg-blue-50 p-6 rounded-2xl text-center space-y-3 border border-blue-100">
+                <h2 class="font-bold text-lg text-blue-900">หากต้องการความช่วยเหลือเพิ่มเติม?</h2>
+                <p class="text-sm text-blue-700">ทีมงานพร้อมดูแลคุณตลอด 24 ชั่วโมง</p>
+                <button class="bg-blue-600 text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:bg-blue-700">ติดต่อเจ้าหน้าที่ (Live Chat)</button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-8 mt-12 text-sm border-t border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="space-y-3">
+                <div class="text-white text-xl font-bold flex items-center space-x-2">
+                    <i class="fa-solid fa-hotel text-blue-500"></i>
+                    <span>StayVibes</span>
+                </div>
+                <p class="text-xs">แพลตฟอร์มจองที่พักและโรงแรมที่ง่าย รวดเร็ว และคุ้มค่าที่สุด</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3">เกี่ยวกับเรา</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" class="hover:underline">เกี่ยวกับ StayVibes</a></li>
+                    <li><a href="#" class="hover:underline">สมัครร่วมเป็นพาร์ทเนอร์ที่พัก</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3">นโยบายและเงื่อนไข</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" class="hover:underline">Terms & Conditions</a></li>
+                    <li><a href="#" class="hover:underline">Privacy Policy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3">ติดตามเรา</h4>
+                <div class="flex space-x-4 text-lg">
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-facebook"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#" class="hover:text-white"><i class="fa-brands fa-line"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 mt-8 pt-4 border-t border-slate-800 text-center text-xs text-slate-500">
+            © 2024 StayVibes Inc. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT FOR PAGE SWITCHING -->
+    <script>
+        function showPage(pageId) {
+            // Hide all pages
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+
+            // Show selected page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
